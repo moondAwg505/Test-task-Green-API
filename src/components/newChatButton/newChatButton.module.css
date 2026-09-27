@@ -1,1 +1,12 @@
+.new_chat_btn {
+  width: 54px;
+  height: 54px;
+  border: none;
+  border-radius: 50%;
+  background-color: #3390ec;
+  cursor: pointer;
+}
 
+.icon_btn {
+  color: #fff;
+}
