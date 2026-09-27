@@ -2,3 +2,8 @@
   cursor: pointer;
   overflow: hidden;
 }
+
+.button_menu {
+  border: none;
+  background-color: inherit;
+}

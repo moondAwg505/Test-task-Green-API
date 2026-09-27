@@ -1,4 +1,6 @@
 .wrapper_menu {
+  position: absolute;
+  top: 7%;
   width: max-content;
   min-width: 180px;
   display: flex;
@@ -10,13 +12,12 @@
 }
 
 .button {
-    
   display: flex;
   justify-content: left;
   align-items: center;
   height: 2rem;
-  margin: .1rem;
-  padding-left: .75rem;
+  margin: 0.1rem;
+  padding-left: 0.75rem;
   padding-right: 1.875rem;
   border: none;
   background-color: #fff;
@@ -25,9 +26,9 @@
 }
 
 .icon_btn {
-    margin-right: 1.25rem;
+  margin-right: 1.25rem;
 }
 
 .button:hover {
-    background-color: #dfe5e9;
+  background-color: #dfe5e9;
 }
