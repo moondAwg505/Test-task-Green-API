@@ -11,11 +11,9 @@ interface IncomingNotification {
     typeWebhook: string;
     timestamp: number;
     idMessage: string;
-
     senderData: {
       chatId: string;
     };
-
     messageData: {
       typeMessage: string;
       textMessageData?: {
@@ -26,11 +24,7 @@ interface IncomingNotification {
 }
 
 export function usePolling(
-  onIncoming: (
-    chatId: string,
-    text: string,
-    timestamp: number
-  ) => void
+  onIncoming: (chatId: string, text: string, timestamp: number) => void,
 ) {
   const { idInstance, apiTokenInstance, isAuthenticated } = useAuth();
 
@@ -42,19 +36,26 @@ export function usePolling(
   }, [onIncoming]);
 
   useEffect(() => {
+    // 1. Проверка на наличие данных
     if (!isAuthenticated || !idInstance || !apiTokenInstance) {
       return;
     }
+
+    // 2. ФИКСАЦИЯ ТИПА: Создаем локальные константы.
+    // Теперь TypeScript точно знает, что это string, а не string | undefined
+    const currentIdInstance = idInstance;
+    const currentApiTokenInstance = apiTokenInstance;
 
     stopped.current = false;
 
     async function loop() {
       while (!stopped.current) {
         try {
-          const notification = await receiveNotification(
-            idInstance,
-            apiTokenInstance
-          ) as IncomingNotification | null;
+          // 3. Используем безопасные константы
+          const notification = (await receiveNotification(
+            currentIdInstance,
+            currentApiTokenInstance,
+          )) as IncomingNotification | null;
 
           if (!notification) {
             continue;
@@ -62,33 +63,30 @@ export function usePolling(
 
           const { body } = notification;
 
-          // Нас интересуют только входящие сообщения Telegram
           if (
             body.typeWebhook === "incomingMessageReceived" &&
             body.messageData.typeMessage === "textMessage"
           ) {
-            const text =
-              body.messageData.textMessageData?.textMessage;
+            const text = body.messageData.textMessageData?.textMessage;
 
             if (text) {
               onIncomingRef.current(
-                body.senderData.chatId,
+                String(body.senderData.chatId), // Дополнительно приводим к строке для надежности
                 text,
-                body.timestamp
+                body.timestamp,
               );
             }
           }
 
-          // Удаляем обработанное уведомление из очереди
+          // 4. Здесь ошибки больше не будет
           await deleteNotification(
-            idInstance,
-            apiTokenInstance,
-            notification.receiptId
+            currentIdInstance,
+            currentApiTokenInstance,
+            notification.receiptId,
           );
         } catch (err) {
           console.error("Polling error:", err);
 
-          // Небольшая пауза только при настоящей ошибке
           await new Promise((resolve) => {
             setTimeout(resolve, 3000);
           });

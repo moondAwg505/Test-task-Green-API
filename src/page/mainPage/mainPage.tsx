@@ -18,6 +18,7 @@ export const MainPage = () => {
     setActiveChatId,
     createChat,
     addMessage,
+    deleteChat
   } = useChats();
 
   usePolling((chatId, text, timestamp) => {
@@ -66,6 +67,7 @@ export const MainPage = () => {
           chats={chats}
           activeChatId={activeChatId}
           onSelect={setActiveChatId}
+          onDelete={deleteChat}
         />
         <NewChatbutton onSubmit={handleAddContact} />
       </aside>
