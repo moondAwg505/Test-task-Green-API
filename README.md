@@ -2,8 +2,7 @@
 
 ## Стек
 * TypeScript + React
-* HTML5
-* CSS3
+* HTML5 / CSS3 (CSS Modules)
 * Vite
 
 ## Инструменты 
