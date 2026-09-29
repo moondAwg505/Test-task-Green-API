@@ -42,6 +42,7 @@ export const MainPage = () => {
 
   const handleSend = async (text: string) => {
     if (!activeChatId) return;
+  try {
     await sendMessage(idInstance!, apiTokenInstance!, activeChatId, text);
     addMessage(activeChatId, {
       id: crypto.randomUUID(),
@@ -51,6 +52,10 @@ export const MainPage = () => {
       fromMe: true,
       createdAt: Date.now(),
     });
+  } catch (err) {
+    alert("Не удалось отправить сообщение");
+    console.error(err);
+  }
   };
 
   return (

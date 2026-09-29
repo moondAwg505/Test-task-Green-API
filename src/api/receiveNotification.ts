@@ -1,4 +1,4 @@
-const API_URL = "https://4100.api.green-api.com";
+import { API_URL } from "./client";
 
 export interface TelegramNotification {
   receiptId: number;
@@ -38,7 +38,7 @@ export interface TelegramNotification {
 
 export async function receiveNotification(
   idInstance: string,
-  apiTokenInstance: string
+  apiTokenInstance: string,
 ): Promise<TelegramNotification | null> {
   const url =
     `${API_URL}/waInstance${idInstance}` +
@@ -58,4 +58,22 @@ export async function receiveNotification(
   }
 
   return JSON.parse(text);
+}
+
+export async function deleteNotification(
+  idInstance: string,
+  apiTokenInstance: string,
+  receiptId: number,
+) {
+  const url =
+    `${API_URL}/waInstance${idInstance}` +
+    `/deleteNotification/${apiTokenInstance}/${receiptId}`;
+
+  const res = await fetch(url, { method: "DELETE" });
+
+  if (!res.ok) {
+    throw new Error(`Green API error ${res.status}`);
+  }
+
+  return res.json();
 }
