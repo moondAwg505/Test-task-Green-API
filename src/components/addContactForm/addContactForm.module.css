@@ -1,0 +1,81 @@
+.ACF_form {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  height: max-content;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px #00000026;
+  background-color: #fff;
+}
+
+.ACF_header {
+  display: flex;
+  align-items: center;
+}
+
+.ACF_text_form {
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.input_form_ACF {
+  height: 1.9rem;
+  border: none;
+  border-radius: 16px;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+.ACF_btn_form {
+  width: max-content;
+  height: 2.5rem;
+  padding: 0px 1.375rem;
+  margin-left: auto;
+  border: none;
+  border-radius: 16px;
+  background-color: #3390ec;
+  color: #fff;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ACF_close_btn {
+  margin-left: auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.input_form_ACF:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3390ec;
+}
+
+.input_form_ACF::placeholder {
+  padding-left: 5px;
+  font-size: 14px;
+}
+
+.ACF_btn_form:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(109, 109, 109, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}

@@ -1,3 +1,4 @@
+import type { Message } from "../../type/types";
 import style from "./chatWindow.module.css";
 
 import { MessageInput } from "./messageInput";

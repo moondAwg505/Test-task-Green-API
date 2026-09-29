@@ -9,7 +9,6 @@ export const MessageInput = ({
 }) => {
   const [text, setText] = useState("");
 
-  //
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmed = text.trim();
