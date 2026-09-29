@@ -2,6 +2,7 @@ import { Send } from "lucide-react";
 import style from "./messageInput.module.css";
 import { useState, type SyntheticEvent } from "react";
 
+// Input для ввода сообщеня с кнопкой отправки
 export const MessageInput = ({
   onSend,
 }: {

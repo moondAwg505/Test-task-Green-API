@@ -4,6 +4,7 @@ import style from "./chatWindow.module.css";
 import { MessageInput } from "./messageInput";
 import { MessageList } from "./messageList";
 
+// Окно чата
 interface ChatWindowProps {
   messages: Message[];
   onSend: (text: string) => void;

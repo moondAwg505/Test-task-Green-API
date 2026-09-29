@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import type { Message } from "../../../type/types";
 import { MessageBubble } from "../messageInput/messageBubble";
 
+// Стиль сообщения
 export const MessageList = ({ messages }: { messages: Message[] }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
 

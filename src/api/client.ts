@@ -1,4 +1,6 @@
 export const API_URL = "https://4100.api.green-api.com";
+
+// Отправление запроса в API
 export async function callMethod<T>(
   idInstance: string,
   apiTokenInstance: string,

@@ -2,6 +2,7 @@ import { useState, type SyntheticEvent } from "react";
 import { useAuth } from "../../context/AutchContext";
 import style from "./loginPage.module.css";
 
+// Вход
 export const LoginPage = () => {
   const { login } = useAuth();
   const [idInstance, setIdInstance] = useState("");
@@ -10,12 +11,15 @@ export const LoginPage = () => {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!idInstance.trim() || !apiTokenInstance.trim()) return;
-    login({ idInstance: idInstance.trim(), apiTokenInstance: apiTokenInstance.trim() });
+    login({
+      idInstance: idInstance.trim(),
+      apiTokenInstance: apiTokenInstance.trim(),
+    });
   };
 
   return (
     <form className={style.login_form} onSubmit={handleSubmit}>
-      <span className={style.form_text}>Вход в GREEN-API</span>
+      <span className={style.form_text}>Login</span>
       <input
         className={style.form_input}
         placeholder="idInstance"

@@ -1,4 +1,4 @@
-// Код, который считает время для отображения ег ов сообщениях
+// Функция, которыя считает время для отображения ег ов сообщениях
 export const formatTime = (timestamp: number) =>
   new Date(timestamp).toLocaleTimeString("ru-RU", {
     hour: "2-digit",

@@ -1,3 +1,5 @@
+// Модалка для добавления пользователя
+// Импорты
 import { useState, type SyntheticEvent } from "react";
 import style from "./addContactForm.module.css";
 
@@ -20,7 +22,7 @@ export const AddContactForm = ({
   const clearSimbol = phone.replace(/\D/g, "");
   const isEmpty = clearSimbol.length === 0;
 
-  // Управление отправкой 
+  // Управление отправкой
   const handleSubmitPhone = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isEmpty) return;
@@ -28,7 +30,6 @@ export const AddContactForm = ({
     setPhone("");
   };
 
-  
   if (!isOpen) return null;
 
   return (

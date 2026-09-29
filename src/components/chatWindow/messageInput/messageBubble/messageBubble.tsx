@@ -6,6 +6,7 @@ interface MessageBubbleProps {
   message: Message;
 }
 
+// Пузырёк сообщения
 export const MessageBubble = ({ message }: MessageBubbleProps) => {
   return (
     <div

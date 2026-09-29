@@ -36,13 +36,10 @@ export function usePolling(
   }, [onIncoming]);
 
   useEffect(() => {
-    // 1. Проверка на наличие данных
     if (!isAuthenticated || !idInstance || !apiTokenInstance) {
       return;
     }
 
-    // 2. ФИКСАЦИЯ ТИПА: Создаем локальные константы.
-    // Теперь TypeScript точно знает, что это string, а не string | undefined
     const currentIdInstance = idInstance;
     const currentApiTokenInstance = apiTokenInstance;
 
@@ -51,7 +48,6 @@ export function usePolling(
     async function loop() {
       while (!stopped.current) {
         try {
-          // 3. Используем безопасные константы
           const notification = (await receiveNotification(
             currentIdInstance,
             currentApiTokenInstance,
@@ -71,14 +67,13 @@ export function usePolling(
 
             if (text) {
               onIncomingRef.current(
-                String(body.senderData.chatId), // Дополнительно приводим к строке для надежности
+                String(body.senderData.chatId),
                 text,
                 body.timestamp,
               );
             }
           }
 
-          // 4. Здесь ошибки больше не будет
           await deleteNotification(
             currentIdInstance,
             currentApiTokenInstance,

@@ -1,3 +1,4 @@
+// Хранилище состояния чата
 import { useState, useCallback, useEffect } from "react";
 import type { Chat, Message } from "../type/types";
 
@@ -19,7 +20,7 @@ export function useChats() {
   const [activeChatId, setActiveChatId] = useState<string | null>(() => {
     return localStorage.getItem(STORAGE_KEY_ACTIVE_CHAT) || null;
   });
-
+  // Сохранение изменения чета
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_CHATS, JSON.stringify(chats));
   }, [chats]);
@@ -36,12 +37,18 @@ export function useChats() {
     }
   }, [activeChatId]);
 
+  // Создание чата
   const createChat = useCallback((chatId: string, title: string) => {
-    setChats((prev) => (prev.some((c) => c.id === chatId) ? prev : [...prev, { id: chatId, title }]));
+    setChats((prev) =>
+      prev.some((c) => c.id === chatId)
+        ? prev
+        : [...prev, { id: chatId, title }],
+    );
     setMessages((prev) => (prev[chatId] ? prev : { ...prev, [chatId]: [] }));
     setActiveChatId(chatId);
   }, []);
 
+  // Добавление сообщения
   const addMessage = useCallback((chatId: string, message: Message) => {
     setMessages((prev) => ({
       ...prev,
@@ -52,7 +59,7 @@ export function useChats() {
       const chatExists = prev.some((c) => c.id === chatId);
       if (chatExists) {
         return prev.map((c) =>
-          c.id === chatId ? { ...c, lastMessage: message } : c
+          c.id === chatId ? { ...c, lastMessage: message } : c,
         );
       }
       return [
@@ -66,29 +73,26 @@ export function useChats() {
     });
   }, []);
 
-  // === НОВАЯ ФУНКЦИЯ УДАЛЕНИЯ ===
+  // Удаление чата
   const deleteChat = useCallback((chatId: string) => {
-    // 1. Удаляем чат из списка
     setChats((prev) => prev.filter((c) => c.id !== chatId));
 
-    // 2. Удаляем историю сообщений этого чата
     setMessages((prev) => {
       const newMessages = { ...prev };
       delete newMessages[chatId];
       return newMessages;
     });
 
-    // 3. Если удалили активный чат, сбрасываем выбор
     setActiveChatId((prev) => (prev === chatId ? null : prev));
   }, []);
 
   return {
     chats,
-    messages: activeChatId ? messages[activeChatId] ?? [] : [],
+    messages: activeChatId ? (messages[activeChatId] ?? []) : [],
     activeChatId,
     setActiveChatId,
     createChat,
     addMessage,
-    deleteChat, // <--- Не забудь вернуть её
+    deleteChat,
   };
 }

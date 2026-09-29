@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 
+// Функция для закрытия модалки кликом за передлами её
 export function useClickOutside<T extends HTMLElement>(
   onOutsideClick: () => void,
 ) {
