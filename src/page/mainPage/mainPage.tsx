@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAuth } from "../../context/AutchContext";
 import { useChats } from "../../hooks/useChats";
 import { usePolling } from "../../hooks/usePoling";
@@ -7,14 +6,19 @@ import { sendMessage } from "../../api/sendMessage";
 import { SidebarHeader } from "../../components/sidebarHeader/sidebarHeader";
 import { ChatList } from "../../components/chatList/chatList";
 import { NewChatbutton } from "../../components/newChatButton/newChatButton";
-import { AddContactForm } from "../../components/addContactForm/addContactForm";
 import { ChatWindow } from "../../components/chatWindow/chatWindow";
 import style from "./mainPage.module.css";
 
 export const MainPage = () => {
   const { idInstance, apiTokenInstance } = useAuth();
-  const { chats, messages, activeChatId, setActiveChatId, createChat, addMessage } = useChats();
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const {
+    chats,
+    messages,
+    activeChatId,
+    setActiveChatId,
+    createChat,
+    addMessage,
+  } = useChats();
 
   usePolling((chatId, text, timestamp) => {
     addMessage(chatId, {
@@ -23,7 +27,7 @@ export const MainPage = () => {
       chatId,
       sender: { id: chatId, username: "" },
       fromMe: false,
-      createdAt: new Date(timestamp * 1000).toISOString(),
+      createdAt: timestamp * 1000,
     });
   });
 
@@ -34,7 +38,6 @@ export const MainPage = () => {
       return;
     }
     createChat(result.chatId, phone);
-    setIsFormOpen(false);
   };
 
   const handleSend = async (text: string) => {
@@ -46,7 +49,7 @@ export const MainPage = () => {
       chatId: activeChatId,
       sender: { id: "me", username: "me" },
       fromMe: true,
-      createdAt: new Date().toISOString(),
+      createdAt: Date.now(),
     });
   };
 
@@ -54,9 +57,12 @@ export const MainPage = () => {
     <div className={style.page}>
       <aside className={style.sidebar}>
         <SidebarHeader />
-        <ChatList chats={chats} activeChatId={activeChatId} onSelect={setActiveChatId} />
-        <NewChatbutton onClick={() => setIsFormOpen(true)} />
-        <AddContactForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} onSubmit={handleAddContact} />
+        <ChatList
+          chats={chats}
+          activeChatId={activeChatId}
+          onSelect={setActiveChatId}
+        />
+        <NewChatbutton onSubmit={handleAddContact} />
       </aside>
       <main className={style.chat}>
         {activeChatId ? (

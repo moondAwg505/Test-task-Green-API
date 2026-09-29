@@ -1,4 +1,4 @@
-const API_URL = "https://api.green-api.com";
+const API_URL = "https://4100.api.green-api.com";
 
 interface Notification {
   receiptId: number;

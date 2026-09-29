@@ -1,21 +1,35 @@
+import { useState, type SyntheticEvent } from "react";
+import { useAuth } from "../../context/AutchContext";
 import style from "./loginPage.module.css";
 
 export const LoginPage = () => {
+  const { login } = useAuth();
+  const [idInstance, setIdInstance] = useState("");
+  const [apiTokenInstance, setApiTokenInstance] = useState("");
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!idInstance.trim() || !apiTokenInstance.trim()) return;
+    login({ idInstance: idInstance.trim(), apiTokenInstance: apiTokenInstance.trim() });
+  };
+
   return (
-    <form className={style.login_form}>
-      <span className={style.form_text}>Sing in</span>
+    <form className={style.login_form} onSubmit={handleSubmit}>
+      <span className={style.form_text}>Вход в GREEN-API</span>
       <input
         className={style.form_input}
-        placeholder="Email"
-        type="email"
-      ></input>
+        placeholder="idInstance"
+        value={idInstance}
+        onChange={(e) => setIdInstance(e.target.value)}
+      />
       <input
         className={style.form_input}
-        placeholder="Password"
-        type="password"
-      ></input>
+        placeholder="apiTokenInstance"
+        value={apiTokenInstance}
+        onChange={(e) => setApiTokenInstance(e.target.value)}
+      />
       <button className={style.btn_form} type="submit">
-        Login
+        Войти
       </button>
     </form>
   );
